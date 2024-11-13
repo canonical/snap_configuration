@@ -2,6 +2,10 @@ name: my-ros2-teleop-test
 base: core22
 version: '0.1'
 summary: ROS 2 teleop test snap
+license: GPL-3.0
+contact: ubuntu-robotics-community@canonical.com
+source-code: https://github.com/canonical/snap_configuration/
+issues: https://github.com/canonical/snap_configuration/issues
 description: |
   ROS 2 teleop test snap getting configured
 
