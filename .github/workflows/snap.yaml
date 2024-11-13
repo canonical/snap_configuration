@@ -10,37 +10,33 @@ on:
   workflow_call:
 
 jobs:
-  build:
+
+  # Collect all relative paths containing a 'snap/snapcraft.yaml'
+  collect_snap_names:
     runs-on: ubuntu-latest
     outputs:
-      application-snap-file: ${{ steps.build-application-snap.outputs.snap }}
-      configuration-snap-file: ${{ steps.build-configuration-snap.outputs.snap }}
+      snap-names: ${{ steps.snap-names.outputs.snap-names }}
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: howto/content_sharing_configuration_snap
-    - name: Build application snap
-      uses: snapcore/action-build@v1
-      id: build-application-snap
-      with:
-        path: application_snap
-    - name: Build configuration snap
-      uses: snapcore/action-build@v1
-      id: build-configuration-snap
-      with:
-        path: configuration_snap
-    # Make sure the application snap is installable
-    - name: Install and connect the snaps
-      run: |
-        sudo snap install ${{ steps.build-application-snap.outputs.snap }} --dangerous
-        sudo snap install ${{ steps.build-configuration-snap.outputs.snap }} --dangerous
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
+      - id: snap-names
+        run: echo "snap-names=$(find . -type f -name 'snapcraft.yaml' | sed -r 's|^\./([^/]+)/snap/snapcraft.yaml|\1|' | sort | uniq | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+
+  snaps:
+    needs: [collect_snap_names]
+    uses: canonical/robotics-actions-workflows/.github/workflows/snap.yaml@main
+    with:
+      runs-on: '["ubuntu-latest", ["self-hosted", "linux", "ARM64", "medium", "noble"]]'
+      snapcraft-source-subdir: "${{ needs.collect_snap_names.outputs.snap-names }}"
+      git-ref: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
+      snap-test-script: |
+        #!/bin/bash
+
+        set -euxo pipefail
+
         sudo snap connect my-ros2-teleop-test:configuration my-configuration-snap:configuration
-    # Do some testing with the snap
-    - name: Testing
-      run: |
+
+        #TODO add a more relevant test
         snap info my-ros2-teleop-test
         snap info my-configuration-snap
-    - uses: actions/upload-artifact@v3
-      with:
-        name: configuration-and-application-snaps
-        path: .
