@@ -16,6 +16,6 @@ on:
 
 jobs:
   snap:
-    uses: canonical/robotics-actions-workflows/.github/workflows/build-install-test-snap.yaml@main
+    uses: canonical/robotics-actions-workflows/.github/workflows/snap.yaml@main
     with:
       git-ref: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
