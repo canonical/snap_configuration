@@ -8,9 +8,14 @@ on:
       - howto/overwritable_configuration
   workflow_dispatch:
   workflow_call:
+    inputs:
+       branch-name:
+         required: false
+         type: string
+         default: ''
 
 jobs:
   snap:
     uses: canonical/robotics-actions-workflows/.github/workflows/build-install-test-snap.yaml@main
     with:
-      git-ref: howto/overwritable_configuration
+      git-ref: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
