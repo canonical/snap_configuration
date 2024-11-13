@@ -15,8 +15,6 @@ on:
 
 jobs:
   snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/snap.yaml@main
+    uses:  canonical/robotics-actions-workflows/.github/workflows/snap.yaml@main
     with:
-      branch-name: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
-      snap-name: my-ros2-teleop-test
-      snap-install-args: --dangerous
+      git-ref: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
