@@ -2,10 +2,10 @@ name: snap
 on:
   push:
     branches:
-      - howto/content_sharing_configuration_snap
+      - how-to/content_sharing_configuration_snap
   pull_request:
     branches:
-      - howto/content_sharing_configuration_snap
+      - how-to/content_sharing_configuration_snap
   workflow_dispatch:
   workflow_call:
 
