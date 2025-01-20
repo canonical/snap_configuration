@@ -8,6 +8,11 @@ on:
       - how-to/content_sharing_configuration_snap
   workflow_dispatch:
   workflow_call:
+    inputs:
+       branch-name:
+         required: false
+         type: string
+         default: ''
 
 jobs:
 
