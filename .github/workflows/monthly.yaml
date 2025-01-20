@@ -16,7 +16,7 @@ jobs:
   howto-content-configuration-snap:
     uses: canonical/snap_configuration/.github/workflows/snap.yaml@fix/how-to/content-sharing
     with:
-      branch-name: "howto/pull_configuration_from_a_server"
+      branch-name: "how-to/content_sharing_configuration_snap"
   howto-overwritable-configuration-snap:
     uses: canonical/snap_configuration/.github/workflows/snap.yaml@how-to/overwritable_configuration
     with:
