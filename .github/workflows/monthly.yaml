@@ -6,18 +6,30 @@ on:
 
 jobs:
   main-snap:
+    permissions:
+      contents: read
+      actions: write
     uses: canonical/snap_configuration/.github/workflows/snap.yaml@main
     with:
       branch-name: "main"
   howto-pull-configuration-snap:
+    permissions:
+      contents: read
+      actions: write
     uses: canonical/snap_configuration/.github/workflows/snap.yaml@how-to/pull_configuration_from_a_server
     with:
       branch-name: "howto/pull_configuration_from_a_server"
   howto-content-configuration-snap:
+    permissions:
+      contents: read
+      actions: write
     uses: canonical/snap_configuration/.github/workflows/snap.yaml@how-to/content_sharing_configuration_snap
     with:
       branch-name: "how-to/content_sharing_configuration_snap"
   howto-overwritable-configuration-snap:
+    permissions:
+      contents: read
+      actions: write
     uses: canonical/snap_configuration/.github/workflows/snap.yaml@how-to/overwritable_configuration
     with:
       branch-name: "howto/overwritable_configuration"
