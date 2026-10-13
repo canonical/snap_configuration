@@ -16,6 +16,9 @@ on:
 
 jobs:
   main-snap:
+    permissions:
+      contents: read
+      actions: write
     uses: canonical/robotics-actions-workflows/.github/workflows/snap.yaml@main
     with:
       git-ref: ${{ inputs.branch-name == '' && github.ref || inputs.branch-name }}
